@@ -1,8 +1,3 @@
-body {
-  overflow: hidden;
-  background: rgb(25,35,125);
-}
-
 div.drop-container {
   position: absolute;
   top: 0;
@@ -27,8 +22,8 @@ div.drop {
   animation: drip 4s forwards;
 }
 
-h1 {
-  color: white;
+#titleMain {
+  color: darkblue;
   position: absolute;
   font-size: 2.5em;
   height: 1em;

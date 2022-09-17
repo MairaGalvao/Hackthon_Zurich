@@ -13,7 +13,7 @@ function MainPage() {
     <>
       {displayMainPage && (
         <div>
-          <h1>EVERY DROP COUNTS!</h1>
+          <h1 id="titleMain">EVERY DROP COUNTS!</h1>
           <div class="drop-container">
             <div class="drop">
               {" "}
