@@ -9,9 +9,7 @@ app = Flask(__name__)
 @app.get("/synonym")
 def get_synonym():
     print(request)
-    req = request.get_json()
-    print(req)
-    input_word = req['input']
+    input_word = request.args.get("input")
 
     token = 'PhIVhJh4jlfr1KxKLu7o1jOKcHIwV5kF'
     prompt = f'Return a synonym of the given word.\n\ninput: happy\noutput: joy\n\ninput: beautiful\noutput: gorgeous\n\ninput: unlucky\noutput: unfortunate\n\ninput: {input_word}\noutput:'
