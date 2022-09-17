@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import App from "./App";
+import GameOver from "./GameOver";
 
 function MainPage() {
   const [displayGame, setDisplayGame] = useState(false);
   const [displayMainPage, setDisplayMainPage] = useState(true);
+
   function startGame() {
     setDisplayMainPage(false);
     setDisplayGame(true);
@@ -29,7 +31,8 @@ function MainPage() {
           <App />{" "}
         </div>
       )}
-    </>
+
+     </>
   );
 }
 
