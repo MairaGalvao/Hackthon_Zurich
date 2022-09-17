@@ -1,17 +1,18 @@
-import requests
 import ast
 import requests
 
 
 def get_sentence(word):
+    token = 'PhIVhJh4jlfr1KxKLu7o1jOKcHIwV5kF'
+    prompt = f'sentence ending with the word \"moment\":To seize everything you ever wanted in one moment.\nsentence ending with the word \"heavy\":His palms are sweaty, knees weak, arms are heavy.\nsentence ending with the word \"spaghetti\":There\'s vomit on his sweater already, mom\'s spaghetti.\nsentence ending with the word \"knows\":He knows that but he\'s broke, he\'s so stagnant, he knows.\nsentence ending with the word \"music\":You better lose yourself in the music.\nsentence ending with the word \"{word}\":'
+    print(prompt)
     response = requests.post("https://api.ai21.com/studio/v1/j1-large/complete",
-                             headers={
-                                 "Authorization": "Bearer PhIVhJh4jlfr1KxKLu7o1jOKcHIwV5kF"},
+                             headers={"Authorization": f'Bearer {token}'},
                              json={
-                                 "prompt": f'write a sentence that ends with the word bills:i have a lot of money but i also have a lot of bills.\nwrite a sentence that ends with the word pizza:i love salad but i also love pizza.\nwrite a sentence that ends with the word comunity:i love people and i am part of this comunity.\nwrite a sentence that ends with the word computer:i got a new job so i bought a new computer.\nwrite a sentence that ends with the word {word}:',
+                                 "prompt": prompt,
                                  "numResults": 1,
                                  "maxTokens": 39,
-                                 "temperature": 0.89,
+                                 "temperature": 0.69,
                                  "topKReturn": 0,
                                  "topP": 1,
                                  "countPenalty": {
@@ -49,13 +50,19 @@ def get_sentence(word):
 def get_rhyme(word):
     x = requests.get(f'https://api.datamuse.com/words?rel_rhy={word}')
     rhyme_list = ast.literal_eval(x.text)
-    # {'word': 'demagogue', 'score': 2827, 'numSyllables': 3}
-    top_rhyme = rhyme_list[0]
+    top_rhyme = rhyme_list[0]  # {'word': 'demagogue', 'score': 2827, 'numSyllables': 3}
+    # print(f'numSyllables={top_rhyme["numSyllables"]}')
     return top_rhyme['word']
 
 
+def get_last_word_of_sentence(sentence):
+    return sentence.split(' ')[-1]
+
+
 if __name__ == '__main__':
-    ans = get_rhyme('water')
-    print(f'rhym is: {ans}')
-    rhym_sentence = get_sentence(ans)
-    print(f'sentence is: {rhym_sentence}')
+    last_word = get_last_word_of_sentence('I want water to drink')
+    print(f'last word is: {last_word}')
+    ans = get_rhyme(last_word)
+    print(f'rhyme is: {ans}')
+    rhyme_sentence = get_sentence(ans)
+    print(f'sentence is: {rhyme_sentence}')
