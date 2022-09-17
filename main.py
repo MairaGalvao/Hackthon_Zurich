@@ -1,12 +1,16 @@
 import ast
 import requests
-
 from flask import Flask, request, jsonify
+from flask_cors import CORS, cross_origin
+
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'application/json'
 
 
 @app.get("/synonym")
+@cross_origin(supports_credentials=True)
 def get_synonym():
     print(request)
     input_word = request.args.get("input")
@@ -56,6 +60,7 @@ def get_synonym():
 
 
 @app.get("/rhyme")
+@cross_origin(supports_credentials=True)
 def get_rhyme():
     print(request)
     input_word = request.args.get("input")
@@ -68,4 +73,3 @@ def get_rhyme():
     # print(f'numSyllables={top_rhyme["numSyllables"]}')
     rhyme_word = top_rhyme['word']
     return jsonify({'output': rhyme_word, 'input': input_word})
-
