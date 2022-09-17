@@ -3,13 +3,12 @@ import React, {useState} from "react";
 function GameIteration({onClick, input}) {
     const [wordArray, setWordArray] = useState([]);
     const [currentWord, setCurrentWord] = useState(input);
-
-    function handleChange(event) {
-        setCurrentWord(event.target.value);
-    }
+    const [isSynonymPicked, setIsSynonymPicked] = useState(false);
+    const [isRhymePicked, setIsRhymePicked] = useState(false);
 
     const onClickSynonym = () => {
         setWordArray([...wordArray, currentWord])
+        setIsSynonymPicked(true)
         fetch(`http://127.0.0.1:5000/synonym?input=${currentWord}`, {
             headers: {
                 "Content-Type": "application/json",
@@ -22,6 +21,7 @@ function GameIteration({onClick, input}) {
 
     const onClickRhyme = () => {
         setWordArray([...wordArray, currentWord])
+        setIsRhymePicked(true)
         fetch(`http://127.0.0.1:5000/rhyme?input=${currentWord}`, {
             headers: {
                 "Content-Type": "application/json",
@@ -33,11 +33,22 @@ function GameIteration({onClick, input}) {
     };
 
     return (
-        <>
-            <input onChange={handleChange} value={currentWord}></input>
-            <button onClick={onClickSynonym}>synonym</button>
-            <button onClick={onClickRhyme}>rhyme</button>
-        </>
+        <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignContent: 'center',
+            flexDirection: 'column',
+            alignItems: 'center'
+        }}>
+            <div>
+                <span>💧{currentWord}💧</span>
+            </div>
+            <div>
+                <button disabled={isRhymePicked} onClick={onClickSynonym} style={{borderColor: isSynonymPicked ? 'red' : 'grey'}}>synonym
+                </button>
+                <button disabled={isSynonymPicked} onClick={onClickRhyme} style={{borderColor: isRhymePicked ? 'red' : 'grey'}}>rhyme</button>
+            </div>
+        </div>
     );
 }
 
