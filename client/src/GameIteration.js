@@ -41,7 +41,7 @@ function GameIteration({onClick, input}) {
             alignItems: 'center'
         }}>
             <div>
-                <span>💧{currentWord}💧</span>
+                <span style={{fontSize:25}}>💧{currentWord.toLocaleUpperCase()}💧</span>
             </div>
             <div>
                 <button disabled={isRhymePicked} onClick={onClickSynonym} style={{borderColor: isSynonymPicked ? 'red' : 'grey'}}>synonym
