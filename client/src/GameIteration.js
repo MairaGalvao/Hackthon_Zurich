@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import Drop from "./Drop";
 
 function GameIteration({onClick, input}) {
     const [wordArray, setWordArray] = useState([]);
@@ -40,14 +41,23 @@ function GameIteration({onClick, input}) {
             flexDirection: 'column',
             alignItems: 'center'
         }}>
-            <div>
-                <span style={{fontSize:25}}>💧{currentWord.toLocaleUpperCase()}💧</span>
-            </div>
-            <div>
-                <button disabled={isRhymePicked} onClick={onClickSynonym} style={{borderColor: isSynonymPicked ? 'red' : 'grey'}}>synonym
+            <Drop word={currentWord}/>
+            <div style={{marginTop: 40}}>
+                <button disabled={isRhymePicked} onClick={onClickSynonym} style={{
+                    borderColor: isSynonymPicked ? 'red' : 'grey',
+                    borderRadius: '50%', height: 70, width: 70,
+                }}>🤝 synonym
                 </button>
-                <button disabled={isSynonymPicked} onClick={onClickRhyme} style={{borderColor: isRhymePicked ? 'red' : 'grey'}}>rhyme</button>
+                <button disabled={isSynonymPicked} onClick={onClickRhyme}
+                        style={{
+                            borderColor: isRhymePicked ? 'red' : 'grey',
+                            borderRadius: '50%',
+                            height: 70,
+                            width: 70,
+                        }}>👂 rhyme
+                </button>
             </div>
+
         </div>
     );
 }
