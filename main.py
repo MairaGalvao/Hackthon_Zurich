@@ -4,15 +4,15 @@ import requests
 
 def get_sentence(word):
     token = 'PhIVhJh4jlfr1KxKLu7o1jOKcHIwV5kF'
-    prompt = f'sentence ending with the word \"moment\":To seize everything you ever wanted in one moment.\nsentence ending with the word \"heavy\":His palms are sweaty, knees weak, arms are heavy.\nsentence ending with the word \"spaghetti\":There\'s vomit on his sweater already, mom\'s spaghetti.\nsentence ending with the word \"knows\":He knows that but he\'s broke, he\'s so stagnant, he knows.\nsentence ending with the word \"music\":You better lose yourself in the music.\nsentence ending with the word \"{word}\":'
-    print(prompt)
+    prompt = f'a sentence that ends with the word \"water\": I drank a lot of water.\na sentence that ends with the word \"candy\": This gum tastes like candy.\na sentence that ends with the word \"dry\": Your skin is very dry.\n a sentence that ends with the word \"cake\": It\'s your birthday so I got you a cake.\na sentence that ends with the word \"wasteful\": making chocolate is wasteful.\na sentence that ends with the word \"dog\": I have a pet dog.\na sentence that ends with the word \"mom\": She is my mom.\na sentence that ends with the word \"smile\": I love your smile.\na sentence that ends with the word \"job\": I like my job.\na sentence that ends with the word \"table\": I put my bag on the table.\na sentence that ends with the word \"bag\": I have a bag.\na sentence that ends with the word \"liquid\": water is liquid.\na sentence that ends with the word \"love\": She is my love.\na sentence that ends with the word \"drama\": I love drama.\na sentence that ends with the word \"playground\": The kids are playing in the playground.\na sentence that ends with the word \"boy\": He is a boy.\na sentence that ends with the word \"sophisticated\": She is sophisticated.\na sentence that ends with the word \"bottle\": I have a bottle.\na sentence that ends with the word \"cookies\": I am addicted to cookies.\na sentence that ends with the word \"{word}\":'
+
     response = requests.post("https://api.ai21.com/studio/v1/j1-large/complete",
                              headers={"Authorization": f'Bearer {token}'},
                              json={
                                  "prompt": prompt,
-                                 "numResults": 1,
-                                 "maxTokens": 39,
-                                 "temperature": 0.69,
+                                 "numResults": 3,
+                                 "maxTokens": 20,
+                                 "temperature": 0.9,
                                  "topKReturn": 0,
                                  "topP": 1,
                                  "countPenalty": {
@@ -43,14 +43,17 @@ def get_sentence(word):
                              }
                              )
     res = response.json()
-    sentence = res['completions'][0]['data']['text']
-    return sentence
+    print(res['completions'])
+    # for x in res['completions']:
+    #     sentence = x
+    #     print(sentence, '<<<<< MY SENTENCE HERE')
 
 
 def get_rhyme(word):
     x = requests.get(f'https://api.datamuse.com/words?rel_rhy={word}')
     rhyme_list = ast.literal_eval(x.text)
-    top_rhyme = rhyme_list[0]  # {'word': 'demagogue', 'score': 2827, 'numSyllables': 3}
+    # {'word': 'demagogue', 'score': 2827, 'numSyllables': 3}
+    top_rhyme = rhyme_list[0]
     # print(f'numSyllables={top_rhyme["numSyllables"]}')
     return top_rhyme['word']
 
@@ -60,7 +63,7 @@ def get_last_word_of_sentence(sentence):
 
 
 if __name__ == '__main__':
-    last_word = get_last_word_of_sentence('I want water to drink')
+    last_word = get_last_word_of_sentence('I want to code')
     print(f'last word is: {last_word}')
     ans = get_rhyme(last_word)
     print(f'rhyme is: {ans}')
