@@ -1,5 +1,4 @@
 import ast
-import socket
 import requests
 
 from flask import Flask, request, jsonify
@@ -56,11 +55,17 @@ def get_synonym():
     return jsonify({'output': syn, 'input': input_word})
 
 
-def get_rhyme(word):
-    x = requests.get(f'https://api.datamuse.com/words?rel_rhy={word}')
+@app.get("/rhyme")
+def get_rhyme():
+    print(request)
+    input_word = request.args.get("input")
+    print(input_word)
+    x = requests.get(f'https://api.datamuse.com/words?rel_rhy={input_word}')
     rhyme_list = ast.literal_eval(x.text)
     print(rhyme_list)
     # {'word': 'demagogue', 'score': 2827, 'numSyllables': 3}
     top_rhyme = rhyme_list[0]
     # print(f'numSyllables={top_rhyme["numSyllables"]}')
-    return top_rhyme['word']
+    rhyme_word = top_rhyme['word']
+    return jsonify({'output': rhyme_word, 'input': input_word})
+
