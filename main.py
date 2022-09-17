@@ -1,4 +1,5 @@
 import ast
+import socket
 import requests
 
 from flask import Flask, request, jsonify
@@ -17,41 +18,41 @@ def get_synonym():
     prompt = f'Return a synonym of the given word.\n\ninput: happy\noutput: joy\n\ninput: beautiful\noutput: gorgeous\n\ninput: unlucky\noutput: unfortunate\n\ninput: {input_word}\noutput:'
 
     response = requests.post("https://api.ai21.com/studio/v1/j1-jumbo/complete",
-                  headers={"Authorization": f'Bearer {token}'},
-                  json={
-                      "prompt": prompt,
-                      "numResults": 1,
-                      "maxTokens": 20,
-                      "temperature": 0.7,
-                      "topKReturn": 0,
-                      "topP": 1,
-                      "countPenalty": {
-                          "scale": 0,
-                          "applyToNumbers": False,
-                          "applyToPunctuations": False,
-                          "applyToStopwords": False,
-                          "applyToWhitespaces": False,
-                          "applyToEmojis": False
-                      },
-                      "frequencyPenalty": {
-                          "scale": 0,
-                          "applyToNumbers": False,
-                          "applyToPunctuations": False,
-                          "applyToStopwords": False,
-                          "applyToWhitespaces": False,
-                          "applyToEmojis": False
-                      },
-                      "presencePenalty": {
-                          "scale": 0,
-                          "applyToNumbers": False,
-                          "applyToPunctuations": False,
-                          "applyToStopwords": False,
-                          "applyToWhitespaces": False,
-                          "applyToEmojis": False
-                      },
-                      "stopSequences": ["↵"]
-                  }
-                  )
+                             headers={"Authorization": f'Bearer {token}'},
+                             json={
+                                 "prompt": prompt,
+                                 "numResults": 1,
+                                 "maxTokens": 20,
+                                 "temperature": 0.7,
+                                 "topKReturn": 0,
+                                 "topP": 1,
+                                 "countPenalty": {
+                                     "scale": 0,
+                                     "applyToNumbers": False,
+                                     "applyToPunctuations": False,
+                                     "applyToStopwords": False,
+                                     "applyToWhitespaces": False,
+                                     "applyToEmojis": False
+                                 },
+                                 "frequencyPenalty": {
+                                     "scale": 0,
+                                     "applyToNumbers": False,
+                                     "applyToPunctuations": False,
+                                     "applyToStopwords": False,
+                                     "applyToWhitespaces": False,
+                                     "applyToEmojis": False
+                                 },
+                                 "presencePenalty": {
+                                     "scale": 0,
+                                     "applyToNumbers": False,
+                                     "applyToPunctuations": False,
+                                     "applyToStopwords": False,
+                                     "applyToWhitespaces": False,
+                                     "applyToEmojis": False
+                                 },
+                                 "stopSequences": ["↵"]
+                             }
+                             )
     res = response.json()
     syn = res['completions'][0]['data']['text'].strip()
     return jsonify({'output': syn, 'input': input_word})
