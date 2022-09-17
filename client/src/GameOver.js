@@ -6,6 +6,10 @@ function GameOver() {
     <>
       <div>
         <p>GAME OVER</p>
+        <h4>
+          Challenge your friends to beat your score, and raise awareness for
+          water waste.
+        </h4>
       </div>
     </>
   );
