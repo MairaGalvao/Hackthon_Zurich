@@ -45,7 +45,7 @@ function GameIteration({onClick, input}) {
             <div style={{marginTop: 40}}>
                 <button disabled={isRhymePicked} onClick={onClickSynonym} style={{
                     borderColor: isSynonymPicked ? 'red' : 'grey',
-                    borderRadius: '50%', height: 70, width: 70,
+                    borderRadius: '50%', height: 70, width: 70, cursor: 'pointer'
                 }}>🤝 synonym
                 </button>
                 <button disabled={isSynonymPicked} onClick={onClickRhyme}
@@ -54,6 +54,7 @@ function GameIteration({onClick, input}) {
                             borderRadius: '50%',
                             height: 70,
                             width: 70,
+                            cursor: 'pointer'
                         }}>👂 rhyme
                 </button>
             </div>

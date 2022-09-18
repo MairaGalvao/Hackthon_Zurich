@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import App from "./App";
-import GameOver from "./GameOver";
 
 function MainPage() {
   const [displayGame, setDisplayGame] = useState(false);
   const [displayMainPage, setDisplayMainPage] = useState(true);
+  const [inputWord, setInputWord] = useState();
 
   function startGame() {
     setDisplayMainPage(false);
@@ -40,15 +40,14 @@ function MainPage() {
                   START{" "}
                 </button>
               </div>
-              <input />
-              Pick a word
+              <input placeholder={"Insert a word"} onChange={(event) => setInputWord(event.target.value)} />
             </div>
           </div>
         </div>
       )}
       {displayGame && (
         <div>
-          <App />{" "}
+          <App inputWord={inputWord}/>
         </div>
       )}
     </>
